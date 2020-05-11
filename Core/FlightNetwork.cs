@@ -1,16 +1,22 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CheapestTravel
 {
     public class FlightNetwork
     {
+        private const string LINE_PATTERN = @"[A-Za-z]{1,},[A-Za-z]{1,},\d{1,}";
+
         private Dictionary<string, Dictionary<string, uint>> _hubs = new Dictionary<string, Dictionary<string, uint>>();
 
-        public void AddHub(string source, string destination, uint cost)
+        private void AddHub(string source, string destination, uint cost)
         {
             AddBidirecionalHub(source, destination, cost);
             AddBidirecionalHub(destination, source, cost);
@@ -79,6 +85,25 @@ namespace CheapestTravel
 
             return new CheapestRouteResult(cheapestTravel, visit.Value);
         }
+
+        public LoadResult LoadFrom(IEnumerable<string> lines)
+        {
+            var regex = new Regex(LINE_PATTERN);
+            var result = new LoadResult();
+            foreach (var line in lines)
+            {
+                if (regex.IsMatch(line))
+                {
+                    var info = line.Split(",");
+                    AddHub(info[0].ToUpper(), info[1].ToUpper(), Convert.ToUInt32(info[2]));
+                }
+                else
+                    result.AddError($"Linha fora o padrão 'string, string, uint' > {line}");
+            }
+            return result;            
+        }
+
+        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, uint>> Hubs => _hubs.ToDictionary(h => h.Key, h => (IReadOnlyDictionary<string, uint>)h.Value);
     }
 
     public class CheapestRouteResult
@@ -108,12 +133,26 @@ namespace CheapestTravel
         {
             var formatedRoutes = string.Join(" - ", this.Routes);
 
-            return $"{formatedRoutes} > {this.Cost}";
+            return $"{formatedRoutes} > ${this.Cost}";
         }
 
         public IEnumerable<string> Errors => _errors;
 
         public bool HasErrors => this.Errors.Any();
+    }
+
+    public class LoadResult
+    {
+        private readonly List<string> _errors = new List<string>();
+
+        public void AddError(string error)
+        {
+            _errors.Add(error);
+        }
+
+        public bool HasError => _errors.Any();
+
+        public IReadOnlyList<string> Errors => _errors;
     }
 
 }

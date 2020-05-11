@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\users\\almei\\Downloads\\input-file.csv"
+    }
+  }
+}
