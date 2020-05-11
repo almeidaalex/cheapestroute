@@ -17,7 +17,7 @@ public class LoadDataTest
         var network = new FlightNetwork();
         var result = network.LoadFrom(new[] { line });
 
-        Assert.IsFalse(result.HasError);
+        Assert.IsFalse(result.HasErrors);
         Assert.IsNotEmpty(network.Hubs);
 
     }
@@ -30,7 +30,7 @@ public class LoadDataTest
         var network = new FlightNetwork();
         var result = network.LoadFrom(new[] { line });
 
-        Assert.IsTrue(result.HasError);
+        Assert.IsTrue(result.HasErrors);
 
         var expected = "Linha fora o padrão 'string, string, uint' > GRU,BRC,AAA";
         Assert.AreEqual(expected, result.Errors.First());
@@ -44,7 +44,7 @@ public class LoadDataTest
         var network = new FlightNetwork();
         var result = network.LoadFrom(new[] { line });
 
-        Assert.IsFalse(result.HasError);        
+        Assert.IsFalse(result.HasErrors);        
         Assert.IsNotNull(network.Hubs["GRU"]);
     }
 }
