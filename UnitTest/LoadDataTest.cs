@@ -47,5 +47,16 @@ public class LoadDataTest
         Assert.IsFalse(result.HasErrors);        
         Assert.IsNotNull(network.Hubs["GRU"]);
     }
+
+    [Test]
+    public void Should_invalidate_circular_reference()
+    {
+        var line = "AAA,AAA,180";
+
+        var network = new FlightNetwork();
+        var result = network.LoadFrom(new[] { line });
+
+        Assert.AreEqual("CIRCULAR_REFERENCE > AAA, AAA", result.Errors.First());
+    }
 }
 

@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "cheap_travel/1.0.0": {
+        "dependencies": {
+          "CheapestTravel": "1.0.0"
+        },
+        "runtime": {
+          "cheap_travel.dll": {}
+        }
+      },
+      "CheapestTravel/1.0.0": {
+        "runtime": {
+          "CheapestTravel.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "cheap_travel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CheapestTravel/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

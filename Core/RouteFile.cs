@@ -22,16 +22,22 @@ namespace CheapestTravel
             return lines;
         }
 
-        public static void WriteFile(string path, string route)
+        public static ImportResult WriteFile(string path, string route)
         {
             var regex = new Regex(FlightNetwork.LINE_PATTERN);
+            var result = new ImportResult();
             if (regex.IsMatch(route))
             {
-                using var writer = new StreamWriter(path);
+                using var writer = File.AppendText(path);
                 writer.WriteLineAsync(route);
             }
+            else
+                result.AddError($"Input format mismatch {route}");
 
+            return result;
         }
 
     }   
+
+    public class ImportResult : Result {}
 }

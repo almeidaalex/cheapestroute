@@ -1,8 +1,5 @@
 ﻿using CheapestTravel;
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace CLI
@@ -33,7 +30,7 @@ namespace CLI
                         continue;
                     }
 
-                    var splitedRoutes = route.ToUpper().Split("-");
+                    var splitedRoutes = route.Split("-");
                     var routeResult = network.CheapRoute(splitedRoutes[0], splitedRoutes[1]);
                     if (routeResult.HasErrors)
                         Console.WriteLine(string.Join(Environment.NewLine, routeResult.Errors));

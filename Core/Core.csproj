@@ -4,11 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <NoDefaultLaunchSettingsFile>True</NoDefaultLaunchSettingsFile>
     <RootNamespace>CheapestTravel</RootNamespace>
-    <AssemblyName>CheapestTravel</AssemblyName>
+    <AssemblyName>core</AssemblyName>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0" />
-  </ItemGroup>
 
 </Project>

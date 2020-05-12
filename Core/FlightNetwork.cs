@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CheapestTravel
 {
@@ -32,6 +27,9 @@ namespace CheapestTravel
 
         public CheapestRouteResult CheapRoute(string from, string to)
         {
+            from = from.ToUpper();
+            to = to.ToUpper();
+
             var path_weight = _hubs.ToDictionary(hub => hub.Key, hub => uint.MaxValue);
             var previous = new Dictionary<string, string>();
             var cheapestTravel = new List<string>();
@@ -90,15 +88,25 @@ namespace CheapestTravel
         {
             var regex = new Regex(LINE_PATTERN);
             var result = new LoadResult();
+            var lineCount = 1;
             foreach (var line in lines)
             {
                 if (regex.IsMatch(line))
                 {
                     var info = line.Split(",");
-                    AddHub(info[0].ToUpper(), info[1].ToUpper(), Convert.ToUInt32(info[2]));
+                    var source = info[0].ToUpper();
+                    var destination = info[1].ToUpper();
+
+                    if (source.Equals(destination))
+                    {
+                        result.AddError($"CIRCULAR_REFERENCE > {source}, {destination}");
+                        continue;
+                    }
+                    AddHub(source, destination, Convert.ToUInt32(info[2]));
                 }
                 else
-                    result.AddError($"Linha fora o padrão 'string, string, uint' > {line}");
+                    result.AddError($"Line [{lineCount}] input format mismatch 'string, string, uint' > {line}");
+                lineCount++;
             }
             return result;
         }
