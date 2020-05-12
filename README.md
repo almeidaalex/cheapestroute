@@ -2,19 +2,34 @@
 
 Para executar essa aplicação, você precisará do SDK do dotnet versão 3.1
 
-### Compilar a aplicação para pasta da solução
+## Compilar a aplicação para pasta da solução
 
+### Compilando CLI
 Para compilar o CLI seguir as instruções, na pasta raiz digitar:
 ```
-dotnet publish .\CLI\CLI.csproj -o ./dist
+dotnet publish .\CLI\CLI.csproj -o ./dist/cli
 ```
 
 E para executar aplicação, executar as seguintes instruções
 ```
-cd dist
+cd dist/cli
 cheap_route.exe <arquivo>
 ```
-### Estrutura da aplicacão
+
+### Compilando Api
+Para compilar o Api seguir as instruções, na pasta raiz digitar:
+```
+dotnet publish .\API\API.csproj -o ./dist/api
+```
+
+E para executar aplicação, executar as seguintes instruções
+```
+cd dist/api
+dotnet API.dll
+```
+
+
+## Estrutura da aplicacão
 
 ```
  CheapestTravel
@@ -27,7 +42,7 @@ cheap_route.exe <arquivo>
 ### Design da solução
 A solução possui quatro projetos, embora sejam pequenos eles tem suas responsabilidades definidas. O principal projeto é o Core, é nele que a funcionalidade principal está escrita, não tem dependencias com as camadas de apresentação. Os testes unitários foram basicamente construídos para validar as funcionalidades do core.
 
-Os projetos CLI e API são respectivamente a aplicação de linha de comando e o serviço Rest. E a forma com que aplicação chega ao seu usuário final, não possui nenhuma regra sobre as rotas, apenas possui validações de entrada e mostra as saídas de sucesso ou falha.
+Os projetos CLI e API são respectivamente a aplicação de linha de comando e o serviço Rest. É a forma com que aplicação chega ao seu usuário final, não possui nenhuma regra sobre as rotas, apenas possui validações de entrada e mostra as saídas de sucesso ou falha.
 
 ### API
 A api possui apenas dois métodos, para incluir novas rotas e para consultar o menor caminho.
