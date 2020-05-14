@@ -30,27 +30,27 @@ namespace CheapestTravel
             from = from.ToUpper();
             to = to.ToUpper();
 
-            var path_weight = _hubs.ToDictionary(hub => hub.Key, hub => uint.MaxValue);
+            var travelFare = _hubs.ToDictionary(hub => hub.Key, hub => uint.MaxValue);
             var previous = new Dictionary<string, string>();
             var cheapestTravel = new List<string>();
             KeyValuePair<string, uint> visit = new KeyValuePair<string, uint>();
 
-            if (!path_weight.ContainsKey(from))
+            if (!travelFare.ContainsKey(from))
                 return new CheapestRouteResult($"NO_ORIGIN_FOUND > {from}");
 
-            if (!path_weight.ContainsKey(to))
+            if (!travelFare.ContainsKey(to))
                 return new CheapestRouteResult($"NO_DESTINATION_FOUND > {to}");
 
-            path_weight[from] = 0;
+            travelFare[from] = 0;
 
-            while (path_weight.Any())
+            while (travelFare.Any())
             {
-                visit = path_weight.OrderBy(r => r.Value).First();
+                visit = travelFare.OrderBy(r => r.Value).First();
 
                 var hubs = _hubs[visit.Key];
                 foreach (var hub in hubs)
                 {
-                    if (!path_weight.ContainsKey(hub.Key)) continue;
+                    if (!travelFare.ContainsKey(hub.Key)) continue;
 
                     if (visit.Value == uint.MaxValue)
                     {
@@ -58,13 +58,13 @@ namespace CheapestTravel
                     }
 
                     var cost = visit.Value + hub.Value;
-                    if (path_weight[hub.Key] == uint.MaxValue || cost < path_weight[hub.Key])
+                    if (travelFare[hub.Key] == uint.MaxValue || cost < travelFare[hub.Key])
                     {
-                        path_weight[hub.Key] = cost;
+                        travelFare[hub.Key] = cost;
                         previous[hub.Key] = visit.Key;
                     }
                 }
-                path_weight.Remove(visit.Key);
+                travelFare.Remove(visit.Key);
 
                 if (visit.Key == to)
                 {

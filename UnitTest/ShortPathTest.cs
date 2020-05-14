@@ -90,23 +90,5 @@ public class ShortPathTest
         Assert.IsTrue(cheapestRoute.HasErrors);
         Assert.AreEqual("NO_ROUTE", cheapestRoute.Errors.First());
     }
-
-    //[Test]
-    //public void From_cracking_code_interview()
-    //{
-    //    Graph g = new Graph();
-    //    //g.add_vertex('A', new Dictionary<char, int>() { { 'B', 7 }, { 'C', 8 } });
-    //    g.AddHub("A", "B", 5);
-    //    g.AddHub("A", "C", 3);
-    //    g.AddHub("A", "E", 2);
-    //    g.AddHub("B", "D", 2);
-    //    g.AddHub("C", "B", 1);
-    //    g.AddHub("C", "D", 1);
-    //    g.AddHub("D", "A", 1);
-    //    g.AddHub("D", "H", 1);
-    //    g.AddHub("D", "G", 2);
-    //    g.AddHub("E", "F", 7);
-    //    g.AddHub("F", "B", 3);
-    //    g.AddHub("F", "G", 1);
-    //}
+    
 }

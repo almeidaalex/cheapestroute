@@ -32,7 +32,7 @@ public class LoadDataTest
 
         Assert.IsTrue(result.HasErrors);
 
-        var expected = "Linha fora o padrão 'string, string, uint' > GRU,BRC,AAA";
+        var expected = "Line [1] input format mismatch 'string, string, uint' > GRU,BRC,AAA";
         Assert.AreEqual(expected, result.Errors.First());
     }
 
