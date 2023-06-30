@@ -9,7 +9,7 @@ namespace CheapestTravel
     {
         public static string LINE_PATTERN = @"[A-Za-z]{1,},[A-Za-z]{1,},\d{1,}";
 
-        private Dictionary<string, Dictionary<string, uint>> _hubs = new Dictionary<string, Dictionary<string, uint>>();
+        private readonly Dictionary<string, Dictionary<string, uint>> _hubs = new Dictionary<string, Dictionary<string, uint>>();
 
         private void AddHub(string source, string destination, uint cost)
         {
@@ -141,7 +141,7 @@ namespace CheapestTravel
 
     public class LoadResult : Result
     {
-        
+
     }
 
     public abstract class Result
@@ -156,7 +156,7 @@ namespace CheapestTravel
         public bool HasErrors => _errors.Any();
 
         public IReadOnlyList<string> Errors => _errors;
-        
+
     }
 
 }
