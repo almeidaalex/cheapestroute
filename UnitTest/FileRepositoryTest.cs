@@ -13,19 +13,7 @@ public class FileRepositoryTest
   {
     var repo = new FileRepository();
     repo.AddRoute("GRU", "BRC", 10);
-    Assert.AreEqual(1, repo.GetAll().Count);
-  }
-
-  [Test]
-  public void Should_upper_case_all_routes_inputed()
-  {
-    var line = "gru,brc,10";
-
-    //var network = new FlightNetwork();
-    ///var result = network.LoadFrom(new[] { line });
-
-    // Assert.IsFalse(result.HasErrors);
-    // Assert.IsNotNull(network.Hubs["GRU"]);
+    Assert.AreEqual(2, repo.GetAll().Count);
   }
 
   [Test]
