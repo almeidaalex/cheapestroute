@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
-using Microsoft.VisualBasic;
+using Core;
 
 namespace CLI;
 
@@ -14,16 +14,17 @@ internal class Program
   {
     var root = new RootCommand
     {
-      new Option<string>("--import-file", description: "Import CSV file to Cheap Flight System"),
-      new Option<string>("--trip", description: "Import CSV file to Cheap Flight System"),
+      new Option<string>("--source", description: "Import CSV file to Cheap Flight System"),
+      new Option<string>("--trip", description: "Trip from point A to point B"),
     };
 
-    var tripCommand = new Command("--trip", description: "Find the cheapest route between two points");
-    tripCommand.SetHandler((trip) => Console.WriteLine($"Trip: {trip}"));
-
-    root.Handler = CommandHandler.Create<string, string>((importFile, trip) => {
-      Console.WriteLine($"Import: {importFile}");
+    root.Handler = CommandHandler.Create<string, string>((source, trip) => {
+      Console.WriteLine($"Import: {source}");
       Console.WriteLine($"Trip: {trip}");
+      var tripInput = trip.Split(' ');
+      var network = new FlightNetwork(new FileRepository(filePath: source));
+      var route = network.CheapRoute(tripInput[0], tripInput[1]);
+      Console.WriteLine($"The cheapest route is: {route}");
     });
 
     return await root.InvokeAsync(args);
