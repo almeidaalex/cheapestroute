@@ -9,5 +9,8 @@ public interface IRoutesRepository
   void AddRoute(string source, string destination, uint cost);
 
   IReadOnlyDictionary<string, IReadOnlyDictionary<string, uint>> GetAll();
+
   IDictionary<string, uint> Get(string key);
+
+  void Save();
 }
