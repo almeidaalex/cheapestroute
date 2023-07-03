@@ -29,10 +29,10 @@ namespace CheapestTravel
       var cheapestTravel = new List<string>();
       KeyValuePair<string, uint> visit = new();
 
-      if (!travelFare.ContainsKey(from))
+      if (!net.ContainsKey(from))
         return new CheapestRouteResult($"NO_ORIGIN_FOUND > {from}");
 
-      if (!travelFare.ContainsKey(to))
+      if (!net.ContainsKey(to))
         return new CheapestRouteResult($"NO_DESTINATION_FOUND > {to}");
 
       travelFare[from] = 0;
@@ -65,13 +65,11 @@ namespace CheapestTravel
           string airport = to;
           while (previous.ContainsKey(airport))
           {
-            cheapestTravel.Add(airport);
+            cheapestTravel.Insert(0, airport);
             airport = previous[airport];
           }
-          cheapestTravel.Add(from);
-          cheapestTravel.Reverse();
+          cheapestTravel.Insert(0,from);
           break;
-
         }
       }
 
