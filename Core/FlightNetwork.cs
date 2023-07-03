@@ -18,8 +18,6 @@ namespace CheapestTravel
       _routesRepository = routesRepository;
     }
 
-    public static string LINE_PATTERN = @"[A-Za-z]{1,},[A-Za-z]{1,},\d{1,}";
-
     public CheapestRouteResult CheapRoute(string from, string to)
     {
       from = from.ToUpper();
@@ -29,7 +27,7 @@ namespace CheapestTravel
       var travelFare = net.ToDictionary(hub => hub.Key, hub => uint.MaxValue);
       var previous = new Dictionary<string, string>();
       var cheapestTravel = new List<string>();
-      KeyValuePair<string, uint> visit = new KeyValuePair<string, uint>();
+      KeyValuePair<string, uint> visit = new();
 
       if (!travelFare.ContainsKey(from))
         return new CheapestRouteResult($"NO_ORIGIN_FOUND > {from}");
@@ -79,7 +77,6 @@ namespace CheapestTravel
 
       return new CheapestRouteResult(cheapestTravel, visit.Value);
     }
-    public IReadOnlyDictionary<string, IReadOnlyDictionary<string, uint>> Hubs => _routesRepository.GetAll();
   }
 
   public class CheapestRouteResult : Result
@@ -104,11 +101,6 @@ namespace CheapestTravel
 
       return $"{formatedRoutes} > ${this.Cost}";
     }
-
-  }
-
-  public class LoadResult : Result
-  {
 
   }
 

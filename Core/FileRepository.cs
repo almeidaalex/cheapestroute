@@ -38,16 +38,8 @@ public class FileRepository : IRoutesRepository
     AddBidirecionalHub(destination, source, cost);
   }
 
-  public IDictionary<string, uint> Get(string key)
-  {
-    return _hubs[key]; //Danger
-  }
-
   public IReadOnlyDictionary<string, IReadOnlyDictionary<string, uint>> GetAll() =>
     _hubs.ToDictionary(h => h.Key, h => (IReadOnlyDictionary<string, uint>)h.Value);
-
-  public bool HasHub(string hubName) =>
-    _hubs.ContainsKey(hubName);
 
   private void AddBidirecionalHub(string pointA, string pointB, uint cost)
   {
