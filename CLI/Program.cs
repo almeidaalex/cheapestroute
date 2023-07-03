@@ -21,6 +21,7 @@ internal class Program
     root.Handler = CommandHandler.Create<string, string>((source, trip) => {
       Console.WriteLine($"Import: {source}");
       Console.WriteLine($"Trip: {trip}");
+      //TODO: add input validation, this split isn't nice.
       var tripInput = trip.Split(' ');
       var network = new FlightNetwork(new FileRepository(filePath: source));
       var route = network.CheapRoute(tripInput[0], tripInput[1]);
